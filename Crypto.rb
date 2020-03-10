@@ -1,30 +1,46 @@
 # require 'openssl'
-def encrypt()
-        # file = gets.chomp
-        while file == ""
-            print "Enter the filename you want to Encrypt: "
-            file = gets.chomp
-            if File.file?(file)
-                system("openssl aes-128-cbc -a -salt -in #{file} -out #{file}.enc")
-                puts "Encrypted file succesfully generated"
-            elsif file == "exit"
-                abort
-            else
-                puts "Invalid file name"
-                file = ""
-            end
-        end
-end
+# def encrypt()
+#         # file = gets.chomp
+#         while file == ""
+#             print "Enter the filename you want to Encrypt: "
+#             file = gets.chomp
+#             if File.file?(file)
+#                 system("openssl aes-128-cbc -a -salt -in #{file} -out #{file}.enc")
+#                 puts "Encrypted file succesfully generated"
+#             elsif file == "exit"
+#                 abort
+#             else
+#                 puts "Invalid file name"
+#                 file = ""
+#             end
+#         end
+# end
 
-def decrypt()
+# def decrypt()
+#     file = ""
+
+#     while file == ""
+#         print "Enter the filename you want to Decrypt: "
+#         file = gets.chomp
+#         if File.file?(file)
+#             system("openssl aes-128-cbc -d -a -in #{file} -out #{file.delete_suffix(".enc")}")
+#             puts "Decryption complete"
+#         elsif file == "exit"
+#             abort
+#         else
+#             puts "Invalid file name"
+#             file = ""
+#         end
+#     end
+# end
+def run_crypto(crypto)
     file = ""
-
     while file == ""
-        print "Enter the filename you want to Decrypt: "
+        print "Enter the filename you want to #{crypto}: "
         file = gets.chomp
         if File.file?(file)
-            system("openssl aes-128-cbc -d -a -in #{file} -out #{file.delete_suffix(".enc")}")
-            puts "Decryption complete"
+            crypto == "Encrypt" ? system("openssl aes-128-cbc -a -salt -in #{file} -out #{file}.enc") : system("openssl aes-128-cbc -d -a -in #{file} -out #{file.delete_suffix(".enc")}")
+            puts "#{crypto}ion complete"
         elsif file == "exit"
             abort
         else
@@ -32,9 +48,6 @@ def decrypt()
             file = ""
         end
     end
-end
-def run_crypto()
-    encrypt
 end
 
 def menu()
@@ -46,13 +59,13 @@ def menu()
         choice = gets.chomp
 
         if choice == "1"
-            
+            run_crypto("Encrypt")
         elsif choice == "2"
-            
+            run_crypto("Decrypt")
         elsif choice == "3"
             quit = true
         else
-            p "Invalid Selection"
+            puts "Invalid Selection"
         end
     end
 end
