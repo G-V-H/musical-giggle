@@ -1,4 +1,4 @@
-require 'openssl'
+# require 'openssl'
 def encrypt()
         # file = gets.chomp
         while file == ""
@@ -33,47 +33,28 @@ def decrypt()
         end
     end
 end
-# def run_crypto()
+def run_crypto()
+    encrypt
+end
 
-#     cipher = OpenSSL::Cipher.new('aes-256-cbc')
-#     cipher.encrypt
-#     # key = cipher.random_key
-#     # iv = cipher.random_iv
-#     key = "ThisPasswordIsReallyHardToGuess!"
-#     iv = "0"*16
+def menu()
+    quit = false
+    p quit
+    puts "Welcome to Cryptor"
+    while quit == false
+        puts "Select from the following options\n 1: Encrypt a file\n 2: Decrypt a file\n 3: Quit"
+        choice = gets.chomp
 
-#     encrypt2(cipher, key, iv)
-#     decrypt2(key, iv)
-# end
+        if choice == "1"
+            
+        elsif choice == "2"
+            
+        elsif choice == "3"
+            quit = true
+        else
+            p "Invalid Selection"
+        end
+    end
+end
 
-# def encrypt2(cipher,key,iv)
-
-#     buf = ""
-#     File.open("file.enc", "wb") do |outf|
-#     File.open("msg1.txt", "rb") do |inf|
-#         while inf.read(4096, buf)
-#             outf << cipher.update(buf)
-#         end
-#         outf << cipher.final
-#         p "encrypt"
-#     end
-#     end
-# end
-
-# def decrypt2(key, iv)
-#      cipher = OpenSSL::Cipher.new('aes-256-cbc')
-#      cipher.decrypt
-#      cipher.key = key
-#      cipher.iv = iv # key and iv are the ones from above
-
-#    buf = ""
-#     File.open("file.txt", "wb") do |outf|
-#     File.open("file.enc", "rb") do |inf|
-#         while inf.read(4096, buf)
-#             outf << cipher.update(buf)
-#         end
-#         outf << cipher.final
-#     end
-#     end
-# end
-# run_crypto
+menu
