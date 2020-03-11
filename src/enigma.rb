@@ -22,6 +22,7 @@ def rotate_rotor(rotor, i)
     Hash[ABC_KEYS.zip(rotor.rotate(i))]
 end
 
+
 def input(str)
     # set the temporary rotor variables as the preset rotors
     r1 = $default_rotor1.dup
@@ -55,10 +56,12 @@ def input(str)
 
 end
 
+
 def rotor_setting(rotor, i)
     # sets the starting rotation position as a hash
     Hash[ABC_KEYS.zip(rotor.rotate(i))]
 end
+
 
 def get_setting
     # gets the users initial rotor settings
@@ -80,6 +83,7 @@ def get_setting
     $default_rotor3 = rotor_setting(ROTOR3_VALUES, s3)
 end
 
+
 def get_string
     #gets user message to be en/decrypted
     stringer = TTY::Prompt.new(interrupt: :exit)
@@ -97,6 +101,7 @@ def get_string
 
 end
 
+
 def output_string(str)
    pastel = Pastel.new
    # regex to output in Enigma Machine format
@@ -104,6 +109,7 @@ def output_string(str)
    # colours output string
    puts pastel.bold("Your message is: " + pastel.red("#{output}"))
 end
+
 
 def menu()
     # initialises ascii art and prints it
@@ -118,11 +124,8 @@ def menu()
 end
 
 
-
-
 def save_to(str)
     # saves to local docs file
-    
     saver = TTY::Prompt.new(interrupt: :exit)
     save = saver.yes?("Would you like to save your message?", help_color: :cyan) do |q|
         q.default false
@@ -134,10 +137,12 @@ def save_to(str)
     TTY::File.create_file "docs/#{name[2..-1]}.txt", "#{str}" if save == true
 end
 
-menu() # opens menu
+
+# opens menu
+menu() 
+
 
 # primary loop to execute program
-
 while cont == true
 
     get_setting()
@@ -151,6 +156,7 @@ while cont == true
     end
 
 end
+
 
 # prints ascii 
 puts b.asciify('Goodbye')
