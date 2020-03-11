@@ -1,32 +1,36 @@
-require "tty-prompt"
+require 'tty-prompt'
 require "pastel"
 require 'artii'
+require 'tty-box'
 
-b = Artii::Base.new
+b = Artii::Base.new # intialise ascii art for goodbye
 
-cont = true
+cont = true # continue initialisation for looping
 
-ABC_KEYS = ("A".."Z").to_a
+ABC_KEYS = ("A".."Z").to_a # intiialise base alphabet 
 
-reflector_values = "EJMZALYXVBWFCRQUONTSPIKHGD".split("")
-REFLECTOR_HASH = Hash[ABC_KEYS.zip(reflector_values)]
+reflector_values = "EJMZALYXVBWFCRQUONTSPIKHGD".split("") # set reflector values
+REFLECTOR_HASH = Hash[ABC_KEYS.zip(reflector_values)] # intialise reflector hash
 
-ROTOR1_VALUES = "EJMZALYXVBWFCRQUONTSPIKHGD".split("")
+ROTOR1_VALUES = "EJMZALYXVBWFCRQUONTSPIKHGD".split("") # setting all rotor values
 ROTOR2_VALUES = "YRUHQSLDPXNGOKMIEBFZCWVJAT".split("")
-ROTOR3_VALUES = "FVPJIAOYEDRZXWGCTKUQSBNMHL".split("")
+ROTOR3_VALUES = "FVPJIAOYEDRZXWGCTKUQSBNMHL".split("") 
 
 def rotate_rotor(rotor, i)
+    # method to rotate the letters and return as a hash
     Hash[ABC_KEYS.zip(rotor.rotate(i))]
 end
 
 def input(str)
-
+    # set the temporary rotor variables as the preset rotors
     r1 = $default_rotor1.dup
     r2 = $default_rotor2.dup
     r3 = $default_rotor3.dup
 
+    # increment through each letter in string 
     str.upcase.each_char.with_index.map {|c, i| 
 
+        # conditions to rotate rotors when required
         r1 = rotate_rotor(ROTOR1_VALUES, i)
         if i % 26 == 25
             r2 = rotate_rotor(ROTOR2_VALUES, (i % 25))
@@ -35,7 +39,7 @@ def input(str)
             r3 = rotate_rotor(ROTOR3_VALUES, (i % 675))
         end
         
-        if c != " "
+            # encrypt/decrypt the character received via each rotor, reflector, and back
             c = r1[c]
             c = r2[c]
             c = r3[c]
@@ -45,68 +49,80 @@ def input(str)
             c = r3.invert[c]
             c = r2.invert[c]
             c = r1.invert[c]
-        else
-        end
 
-    }.join
+
+    }.join # returns the en/decryption as a string
 
 end
 
 def rotor_setting(rotor, i)
+    # sets the starting rotation position as a hash
     Hash[ABC_KEYS.zip(rotor.rotate(i))]
 end
 
 def get_setting
+    # gets the users initial rotor settings
     setter = TTY::Prompt.new(interrupt: :exit)
-    setting = setter.ask("What is your secret code?", convert: :int) do |q|
+    setting = setter.ask("Enter your 6 digit cipher setting:", convert: :int) do |q|
         q.required true
+        # regex to ensure only numbers of 6 digits
         q.validate(/\b[0-9]{6}\b/, "Invalid code, please enter a 6 digit number")
     end
 
+    #set variables for each rotor setting
     s1 = setting[0..1]
     s2 = setting[2..3]
     s3 = setting[4..5]
 
+    # set the default rotor hashes
     $default_rotor1 = rotor_setting(ROTOR1_VALUES, s1)
     $default_rotor2 = rotor_setting(ROTOR2_VALUES, s2)
     $default_rotor3 = rotor_setting(ROTOR3_VALUES, s3)
 end
 
 def get_string
+    #gets user message to be en/decrypted
     stringer = TTY::Prompt.new(interrupt: :exit)
-    str = stringer.ask("Enter your message to be encoded: ") do |q|
+    str = stringer.ask("Enter your message to be encoded:") do |q|
         q.required true
+        # regex for letters and spaces only
         q.validate(/^[a-zA-Z ]*$/, "Messages must only include letters and spaces")
+        # removes all whitespace
         q.modify :remove
     end
-    # str = str.delete(' ')
+
     output_string(input(str))
 end
 
 def output_string(str)
    pastel = Pastel.new
+   # regex to output in Enigma Machine format
    output = str.gsub(/.{1,4}(?=.)/, '\0 ')
+   # colours output string
    puts pastel.bold("Your message is: " + pastel.red("#{output}"))
 end
 
 def menu()
+    # initialises ascii art and prints it
     a = Artii::Base.new
     puts a.asciify('Welcome')
     puts a.asciify('To')
     puts a.asciify('Enigma')
 
+    # prompts the user to continue
     prompt = TTY::Prompt.new(interrupt: :exit)
     prompt.keypress("Press any key to continue")
 end
 
-menu()
+menu() # opens menu
+
+# primary loop to execute program
 
 while cont == true
 
-
     get_setting()
     get_string()
-
+    #prompt user to quit program
     quitter = TTY::Prompt.new(interrupt: :exit)
     cont = quitter.yes?("Would you like to try again?", help_color: :cyan) do |q|
         q.default false
@@ -114,7 +130,7 @@ while cont == true
         q.negative 'No'
     end
 
- 
 end
 
-   puts b.asciify('Goodbye')
+# prints ascii 
+puts b.asciify('Goodbye')
