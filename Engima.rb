@@ -1,22 +1,31 @@
-abc_keys = ("A".."Z").to_a
+ABC_KEYS = ("A".."Z").to_a.freeze
 
 reflector_values = "EJMZALYXVBWFCRQUONTSPIKHGD".split("")
-REFLECTOR_HASH = Hash[abc_keys.zip(reflector_values)].freeze
+REFLECTOR_HASH = Hash[ABC_KEYS.zip(reflector_values)].freeze
 
 ROTOR1_VALUES = "EJMZALYXVBWFCRQUONTSPIKHGD".split("").freeze
 ROTOR2_VALUES = "YRUHQSLDPXNGOKMIEBFZCWVJAT".split("").freeze
 ROTOR3_VALUES = "FVPJIAOYEDRZXWGCTKUQSBNMHL".split("").freeze
 
-rotor1_hash = Hash[abc_keys.zip(ROTOR1_VALUES)]
-rotor2_hash = Hash[abc_keys.zip(ROTOR2_VALUES)]
-rotor3_hash = Hash[abc_keys.zip(ROTOR3_VALUES)]
+
+# rotor2_hash = Hash[ABC_KEYS.zip(ROTOR2_VALUES)]
+# rotor3_hash = Hash[ABC_KEYS.zip(ROTOR3_VALUES)]
 
 
-def input(r1, r2, r3)
+def input()
+
     str = "str"
+    r1 = ROTOR1_VALUES
+    r2 = ROTOR2_VALUES
+    r3 = ROTOR3_VALUES
     str.upcase.each_char.with_index {|c, i| 
-        #rotate rotors
-
+        r1 = rotate_rotor(ROTOR1_VALUES, i)
+        if i % 26 == 25
+            r2 = rotate_rotor(ROTOR2_VALUES, (i % 25))
+        end
+        if i % 676 == 0
+            r3 = rotate_rotor(ROTOR3_VALUES, (i % 675))
+        end
         p c
         c = r1[c]
         c = r2[c]
@@ -33,4 +42,8 @@ def input(r1, r2, r3)
 
 end
 
-input(rotor1_hash, rotor2_hash, rotor3_hash)
+def rotate_rotor(rotor, i)
+    rotor = Hash[ABC_KEYS.rotate(i).zip(ROTOR1_VALUES.rotate(i))]
+end
+
+input()
