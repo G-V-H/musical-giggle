@@ -1,7 +1,7 @@
 abc_keys = ("A".."Z").to_a
 
 reflector_values = "EJMZALYXVBWFCRQUONTSPIKHGD".split("")
-REFLECTOR_HASH = abc_keys.zip(reflector_values).freeze
+REFLECTOR_HASH = Hash[abc_keys.zip(reflector_values)].freeze
 
 ROTOR1_VALUES = "EJMZALYXVBWFCRQUONTSPIKHGD".split("").freeze
 ROTOR2_VALUES = "YRUHQSLDPXNGOKMIEBFZCWVJAT".split("").freeze
@@ -15,9 +15,19 @@ rotor3_hash = Hash[abc_keys.zip(ROTOR3_VALUES)]
 def input(r1, r2, r3)
     str = "str"
     str.upcase.each_char.with_index {|c, i| 
+        #rotate rotors
+
+        p c
         c = r1[c]
         c = r2[c]
         c = r3[c]
+        
+        c = REFLECTOR_HASH[c]
+        
+        c = r3.invert[c]
+        c = r2.invert[c]
+        c = r1.invert[c]
+
         p c
     }
 
