@@ -2,6 +2,8 @@ require "tty-prompt"
 require "pastel"
 require 'artii'
 
+b = Artii::Base.new
+
 cont = true
 
 ABC_KEYS = ("A".."Z").to_a
@@ -100,7 +102,7 @@ end
 menu()
 
 while cont == true
-    b = Artii::Base.new
+
 
     get_setting()
     get_string()
@@ -112,5 +114,7 @@ while cont == true
         q.negative 'No'
     end
 
-    puts b.asciify('Goodbye')
+ 
 end
+
+   puts b.asciify('Goodbye')
