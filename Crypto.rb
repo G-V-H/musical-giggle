@@ -1,13 +1,17 @@
 def run_crypto(crypto)
     file = ""
     while file == ""
-        print "Enter the filename you want to #{crypto}: "
+        print "Enter the filename you want to #{crypto}\n(or type 'quit' to return to the main menu): "
         file = gets.chomp
         if File.file?(file)
-            crypto == "Encrypt" ? system("openssl aes-128-cbc -a -salt -in #{file} -out #{file}.enc") : system("openssl aes-128-cbc -d -a -in #{file} -out #{file.delete_suffix(".enc")}")
-            puts "#{crypto}ion complete"
-        elsif file == "exit"
-            abort
+            begin
+                crypto == "Encrypt" ? system("openssl aes-128-cbc -a -salt -in #{file} -out #{file}.enc") : system("openssl aes-128-cbc -d -a -in #{file} -out 1#{file.delete_suffix(".enc")}", :err => File::NULL)
+                puts "#{crypto}ion complete"
+            rescue 
+               puts "Invalid Password"
+            end
+        elsif file == "quit"
+            file = nil 
         else
             puts "Invalid file name"
             file = ""
@@ -30,7 +34,7 @@ def menu()
         elsif choice == "3"
             quit = true
         else
-            puts "Invalid Selection"
+            puts "Invalid Selection. Please enter '1', '2', or '3'"
         end
     end
 end
