@@ -100,6 +100,7 @@ end
 menu()
 
 while cont == true
+    b = Artii::Base.new
 
     get_setting()
     get_string()
@@ -110,4 +111,6 @@ while cont == true
         q.positive 'Yes'
         q.negative 'No'
     end
+
+    puts b.asciify('Goodbye')
 end
