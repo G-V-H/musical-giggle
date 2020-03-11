@@ -1,6 +1,8 @@
 require 'tty-prompt'
 require "pastel"
 require 'artii'
+require 'tty-file'
+require 'securerandom'
 
 b = Artii::Base.new # intialise ascii art for goodbye
 
@@ -49,7 +51,6 @@ def input(str)
             c = r2.invert[c]
             c = r1.invert[c]
 
-
     }.join # returns the en/decryption as a string
 
 end
@@ -90,7 +91,10 @@ def get_string
         q.modify :remove
     end
 
-    output_string(input(str))
+    output = input(str)
+    output_string(output)
+    save_to(output)
+
 end
 
 def output_string(str)
@@ -111,6 +115,23 @@ def menu()
     # prompts the user to continue
     prompt = TTY::Prompt.new(interrupt: :exit)
     prompt.keypress("Press any key to continue")
+end
+
+
+
+
+def save_to(str)
+    # saves to local docs file
+    
+    saver = TTY::Prompt.new(interrupt: :exit)
+    save = saver.yes?("Would you like to save your message?", help_color: :cyan) do |q|
+        q.default false
+        q.positive 'Yes'
+        q.negative 'No'
+    end
+
+    name = SecureRandom.random_number.to_s
+    TTY::File.create_file "docs/#{name[2..-1]}.txt", "#{str}" if save == true
 end
 
 menu() # opens menu
