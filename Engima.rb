@@ -2,7 +2,7 @@ require "tty-prompt"
 require "pastel"
 require 'artii'
 
-a = Artii::Base.new
+cont = true
 
 ABC_KEYS = ("A".."Z").to_a
 
@@ -55,8 +55,8 @@ def rotor_setting(rotor, i)
 end
 
 def get_setting
-    setter = TTY::Prompt.new
-    setting = setter.ask("What is your code?", convert: :int) do |q|
+    setter = TTY::Prompt.new(interrupt: :exit)
+    setting = setter.ask("What is your secret code?", convert: :int) do |q|
         q.required true
         q.validate(/\b[0-9]{6}\b/, "Invalid code, please enter a 6 digit number")
     end
@@ -71,25 +71,43 @@ def get_setting
 end
 
 def get_string
-    stringer = TTY::Prompt.new
-    str = stringer.ask("Enter your message to be encoded") do |q|
+    stringer = TTY::Prompt.new(interrupt: :exit)
+    str = stringer.ask("Enter your message to be encoded: ") do |q|
         q.required true
-        q.validate(/^[a-zA-Z ]/, "Messages must only be include letters and spaces")
+        q.validate(/^[a-zA-Z ]*$/, "Messages must only include letters and spaces")
+        q.modify :remove
     end
-    str = str.delete(' ')
+    # str = str.delete(' ')
     output_string(input(str))
 end
 
 def output_string(str)
-   p output = str.gsub(/.{1,4}(?=.)/, '\0 ')
+   pastel = Pastel.new
+   output = str.gsub(/.{1,4}(?=.)/, '\0 ')
+   puts pastel.bold("Your message is: " + pastel.red("#{output}"))
 end
 
-puts a.asciify('Welcome')
-puts a.asciify('To')
-puts a.asciify('Enigma')
+def menu()
+    a = Artii::Base.new
+    puts a.asciify('Welcome')
+    puts a.asciify('To')
+    puts a.asciify('Enigma')
 
-prompt = TTY::Prompt.new
-prompt.keypress("Press any key to continue")
+    prompt = TTY::Prompt.new(interrupt: :exit)
+    prompt.keypress("Press any key to continue")
+end
 
-get_setting()
-get_string()
+menu()
+
+while cont == true
+
+    get_setting()
+    get_string()
+
+    quitter = TTY::Prompt.new(interrupt: :exit)
+    cont = quitter.yes?("Would you like to try again?", help_color: :cyan) do |q|
+        q.default false
+        q.positive 'Yes'
+        q.negative 'No'
+    end
+end
