@@ -1,5 +1,8 @@
 require "tty-prompt"
 require "pastel"
+require 'artii'
+
+a = Artii::Base.new
 
 ABC_KEYS = ("A".."Z").to_a
 
@@ -80,6 +83,10 @@ end
 def output_string(str)
    p output = str.gsub(/.{1,4}(?=.)/, '\0 ')
 end
+
+puts a.asciify('Welcome')
+puts a.asciify('To')
+puts a.asciify('Enigma')
 
 prompt = TTY::Prompt.new
 prompt.keypress("Press any key to continue")
