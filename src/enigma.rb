@@ -1,7 +1,6 @@
 require 'tty-prompt'
 require "pastel"
 require 'artii'
-require 'tty-box'
 
 b = Artii::Base.new # intialise ascii art for goodbye
 
