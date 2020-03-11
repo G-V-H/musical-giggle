@@ -7,17 +7,16 @@ ROTOR1_VALUES = "EJMZALYXVBWFCRQUONTSPIKHGD".split("")
 ROTOR2_VALUES = "YRUHQSLDPXNGOKMIEBFZCWVJAT".split("")
 ROTOR3_VALUES = "FVPJIAOYEDRZXWGCTKUQSBNMHL".split("")
 
-DEFAULT_ROTOR1 = Hash[ABC_KEYS.zip(ROTOR1_VALUES)]
-DEFAULT_ROTOR2 = Hash[ABC_KEYS.zip(ROTOR2_VALUES)]
-DEFAULT_ROTOR3 = Hash[ABC_KEYS.zip(ROTOR3_VALUES)]
+def rotate_rotor(rotor, i)
+    Hash[ABC_KEYS.zip(rotor.rotate(i))]
+end
+
+def input(str)
 
 
-def input()
-    str = "abcdefghihjk"
-
-    r1 = DEFAULT_ROTOR1.dup
-    r2 = DEFAULT_ROTOR2.dup
-    r3 = DEFAULT_ROTOR3.dup
+    r1 = $default_rotor1.dup
+    r2 = $default_rotor2.dup
+    r3 = $default_rotor3.dup
 
     str.upcase.each_char.with_index.map {|c, i| 
 
@@ -43,12 +42,25 @@ def input()
 
 end
 
-def rotor_setting(rotor)
-    
-end
-
-def rotate_rotor(rotor, i)
+def rotor_setting(rotor, i)
     Hash[ABC_KEYS.zip(rotor.rotate(i))]
 end
 
-p input()
+def get_setting
+    print "Enter your setting: "
+    setting = gets.chomp
+
+    s1 = setting[1].to_i
+    s2 = setting[2].to_i
+    s3 = setting[3].to_i
+
+    $default_rotor1 = rotor_setting(ROTOR1_VALUES, s1)
+    $default_rotor2 = rotor_setting(ROTOR2_VALUES, s2)
+    $default_rotor3 = rotor_setting(ROTOR3_VALUES, s3)
+end
+
+
+get_setting()
+print "\nEnter your message: "
+str = gets.chomp
+p input(str)
