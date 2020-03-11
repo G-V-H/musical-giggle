@@ -134,7 +134,7 @@ def save_to(str)
     end
 
     name = SecureRandom.random_number.to_s
-    TTY::File.create_file "docs/#{name[2..-1]}.txt", "#{str}" if save == true
+    TTY::File.create_file "../docs/#{name[2..-1]}.txt", "#{str}" if save == true
 end
 
 
