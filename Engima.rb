@@ -1,3 +1,5 @@
+require "tty-prompt"
+
 ABC_KEYS = ("A".."Z").to_a
 
 reflector_values = "EJMZALYXVBWFCRQUONTSPIKHGD".split("")
@@ -12,7 +14,6 @@ def rotate_rotor(rotor, i)
 end
 
 def input(str)
-
 
     r1 = $default_rotor1.dup
     r2 = $default_rotor2.dup
@@ -47,12 +48,16 @@ def rotor_setting(rotor, i)
 end
 
 def get_setting
-    print "Enter your setting: "
-    setting = gets.chomp
+    prompt = TTY::Prompt.new
+    setting = prompt.ask("What is your code?", convert: :int) do |q|
+        q.required true
+        q.validate(/\b[0-9]{6}\b/, "Invalid code")
+        ans = q
+    end
 
-    s1 = setting[1].to_i
-    s2 = setting[2].to_i
-    s3 = setting[3].to_i
+    s1 = setting[0..1]
+    s2 = setting[2..3]
+    s3 = setting[4..5]
 
     $default_rotor1 = rotor_setting(ROTOR1_VALUES, s1)
     $default_rotor2 = rotor_setting(ROTOR2_VALUES, s2)
