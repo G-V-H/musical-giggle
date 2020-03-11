@@ -1,4 +1,5 @@
 require "tty-prompt"
+require "pastel"
 
 ABC_KEYS = ("A".."Z").to_a
 
@@ -28,17 +29,20 @@ def input(str)
         if i % 676 == 0
             r3 = rotate_rotor(ROTOR3_VALUES, (i % 675))
         end
-        c = r1[c]
-        c = r2[c]
-        c = r3[c]
         
-        c = REFLECTOR_HASH[c]
-        
-        c = r3.invert[c]
-        c = r2.invert[c]
-        c = r1.invert[c]
+        if c != " "
+            c = r1[c]
+            c = r2[c]
+            c = r3[c]
 
-        
+            c = REFLECTOR_HASH[c]
+            
+            c = r3.invert[c]
+            c = r2.invert[c]
+            c = r1.invert[c]
+        else
+        end
+
     }.join
 
 end
@@ -48,11 +52,10 @@ def rotor_setting(rotor, i)
 end
 
 def get_setting
-    prompt = TTY::Prompt.new
-    setting = prompt.ask("What is your code?", convert: :int) do |q|
+    setter = TTY::Prompt.new
+    setting = setter.ask("What is your code?", convert: :int) do |q|
         q.required true
-        q.validate(/\b[0-9]{6}\b/, "Invalid code")
-        ans = q
+        q.validate(/\b[0-9]{6}\b/, "Invalid code, please enter a 6 digit number")
     end
 
     s1 = setting[0..1]
@@ -64,8 +67,22 @@ def get_setting
     $default_rotor3 = rotor_setting(ROTOR3_VALUES, s3)
 end
 
+def get_string
+    stringer = TTY::Prompt.new
+    str = stringer.ask("Enter your message to be encoded") do |q|
+        q.required true
+        q.validate(/^[a-zA-Z ]/, "Messages must only be include letters and spaces")
+    end
+    str = str.delete(' ')
+    output_string(input(str))
+end
+
+def output_string(str)
+   p output = str.gsub(/.{1,4}(?=.)/, '\0 ')
+end
+
+prompt = TTY::Prompt.new
+prompt.keypress("Press any key to continue")
 
 get_setting()
-print "\nEnter your message: "
-str = gets.chomp
-p input(str)
+get_string()
