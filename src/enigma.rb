@@ -87,7 +87,7 @@ end
 def get_string
     #gets user message to be en/decrypted
     stringer = TTY::Prompt.new(interrupt: :exit)
-    str = stringer.ask("Enter your message to be encoded or decoded:") do |q|
+    str = stringer.ask("Enter your message to be encoded or decoded (letters and spaces only):") do |q|
         q.required true
         # regex for letters and spaces only
         q.validate(/^[a-zA-Z ]*$/, "Messages must only include letters and spaces")

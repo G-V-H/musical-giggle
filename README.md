@@ -33,3 +33,23 @@ When said users are entering data, should they enter the incorrect data types, E
 
 Due to the export feature the user will be able to generate text files filled with their messages, however, these are outputs from Enigma saved to their PC. They do not act as inputs from the user. The process and experience of saving said files is nearly seemless and they are notified of the save location on completion. 
 
+## Control Flow
+
+![Flowchart](../GaryHo_T1A2/docs/Flow2.png)
+
+# Implementation Plan
+Project Kanban Board and details of implementation plan can be found on the project's GitHub public repository project page at the following link:
+
+[GitHub Repo](https://github.com/G-V-H/musical-giggle/projects/1)
+# Dependencies
+## Runtime Dependencies
+Ruby Gems
+* [TTY-Prompt](https://github.com/piotrmurach/tty-prompt)
+* [TTY-File](https://github.com/piotrmurach/tty-file)
+* [artii](https://github.com/miketierney/artii)
+* [Pastel](https://github.com/piotrmurach/pastel)
+* [SecureRandom](https://rubygems.org/gems/rubysl-securerandom/versions/2.0.0) - comes with the default Ruby packages
+
+## Installation and Use
+
+  
