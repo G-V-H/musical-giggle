@@ -87,7 +87,7 @@ end
 def get_string
     #gets user message to be en/decrypted
     stringer = TTY::Prompt.new(interrupt: :exit)
-    str = stringer.ask("Enter your message to be encoded:") do |q|
+    str = stringer.ask("Enter your message to be encoded or decoded:") do |q|
         q.required true
         # regex for letters and spaces only
         q.validate(/^[a-zA-Z ]*$/, "Messages must only include letters and spaces")
@@ -127,7 +127,7 @@ end
 def save_to(str)
     # saves to local docs file
     saver = TTY::Prompt.new(interrupt: :exit)
-    save = saver.yes?("Would you like to save your message?", help_color: :cyan) do |q|
+    save = saver.yes?("Would you like to save your message to a text file?", help_color: :cyan) do |q|
         q.default false
         q.positive 'Yes'
         q.negative 'No'
@@ -149,7 +149,7 @@ while cont == true
     get_string()
     #prompt user to quit program
     quitter = TTY::Prompt.new(interrupt: :exit)
-    cont = quitter.yes?("Would you like to try again?", help_color: :cyan) do |q|
+    cont = quitter.yes?("Would you like to try another message?", help_color: :cyan) do |q|
         q.default false
         q.positive 'Yes'
         q.negative 'No'
