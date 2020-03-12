@@ -19,3 +19,17 @@ One half of the primary purpose of this cryptographic tool is to encrypt message
 The other half of Enigma's primary purpose is to be able to decrypt encoded messages with the user's secret 6 digit cipher code back to their original message. This is in effect a primitive version of symmetric key cryptography. By having the user being able to set or receive a key and message they are able to retrieve their secret messages at a later time and date when required. This implementation of symmetric key cryptography using rotors and a reflector means the complete reverse operation of cycling through each character and substituting each with character key pairings translates the prior gibberish back into the original plain-text.
 ### Export
 For ease of use, record keeping, and transportability the user is able to export their encrypted or decrypted messages to a text file. This serves a potentially valuable option for any user that wishes to transmit their messages (particularly lengthy ones) to another recipient via another means with the knowledge that their message can be read, having been decrypted, or is secure (once encrypted). The file itself is saved under a random name using a cryptographically strong random number generator; meaning it meets US Government's Federal Information Processing Standard for cryptographic modules. This is to ensure that no contextual clues can be gleamed from the file's name, maintaning its security.
+
+# User Interaction
+
+## Interaction Outline
+The user's sole point of interaction will be the terminal/command-line. As the inputs are solely text based no other method of user input is necessary.
+
+Be it that the user interacts with only the command line Enigma will prompt the user in the terminal when they are required to enter data and what kind of data the program is expecting. It is then expected that the user will then enter said data into the terminal.
+
+As Enigma only requires specific forms of data (e.g. 6 digits for the cipher code) we can constrain the possible types of data the user can input, which pre-emptively stops user error when using the program.
+
+When said users are entering data, should they enter the incorrect data types, Enigma (through the implementation of various Ruby Gems) will provide feedback to the user via the terminal, notifying them of what is required. 
+
+Due to the export feature the user will be able to generate text files filled with their messages, however, these are outputs from Enigma saved to their PC. They do not act as inputs from the user. The process and experience of saving said files is nearly seemless and they are notified of the save location on completion. 
+
