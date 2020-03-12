@@ -14,7 +14,7 @@ Anyone with a passing interest in cryptology, history (especially World War 2), 
 
 ## **Features**
 ### Encryption
-
+One half of the primary purpose of this cryptographic tool is to encrypt messages using a polyalphabetic substitution cipher. By being able to go through each character of a word, sentence, or more and replacing each one with different letter via multiple key pairings, dictated by the rotor's and reflector's setup, the user is able to convert their message into what is effectively gobbledygook to any prying eyes. This encrypted message can be effectively stolen and will be ultimately worthless to a thief (even if they had a copy of the Enigma program) without the user's secret 6 digit cipher code. 
 ### Decryption
-
+The other half of Enigma's primary purpose is to be able to decrypt encoded messages with the user's secret 6 digit cipher code back to their original message. This is in effect a primitive version of symmetric key cryptography. By having the user being able to set or receive a key and message they are able to retrieve their secret messages at a later time and date when required. This implementation of symmetric key cryptography using rotors and a reflector means the complete reverse operation of cycling through each character and substituting each with character key pairings translates the prior gibberish back into the original plain-text.
 ### Export
