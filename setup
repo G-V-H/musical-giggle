@@ -1,0 +1,5 @@
+#!/bin/bash
+# Gem Installation Script
+
+cd "${0%/*}"
+bundle install
