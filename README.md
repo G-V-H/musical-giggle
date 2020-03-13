@@ -48,7 +48,9 @@ Ruby Gems
 * [TTY-File](https://github.com/piotrmurach/tty-file)
 * [artii](https://github.com/miketierney/artii)
 * [Pastel](https://github.com/piotrmurach/pastel)
-* [SecureRandom](https://rubygems.org/gems/rubysl-securerandom/versions/2.0.0) - comes with the default Ruby packages
+* [SecureRandom](https://rubygems.org/gems/rubysl-securerandom/versions/2.0.0) - may come with the default Ruby packages
 
 ## Installation and Use
 
+1. Run the 'setup' program
+2. Run the 'Enigma' program
